@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+:root {
+    --bgcolor: 39, 39, 58;
+    --bghover: 29, 29, 43;
+    --secondary: 228, 137, 134;
+    --accent: 142, 20, 99;
+}

@@ -1,0 +1,43 @@
+# .gitignore for both Vue.js Frontend and Node.js Backend
+
+# Node.js (for both frontend and backend)
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Environment Variables (for both frontend and backend)
+.env
+
+# TypeScript (if you're using TypeScript in either frontend or backend)
+*.tsbuildinfo
+
+# Backend (Node.js/Express)
+# Logs
+backend/logs/
+backend/*.log
+
+# Firebase Admin SDK Credentials (Do not expose sensitive keys)
+backend/src/config/*.json
+
+# Build output for the backend (compiled files, if any)
+backend/dist/
+backend/build/
+
+# Frontend (Vue.js)
+# Build output for Vue.js (dist folder generated during `npm run build`)
+panel/dist/
+panel/.nuxt/
+panel/.next/
+
+# IDE / Text Editor files (e.g., VSCode, IntelliJ)
+.vscode/
+.idea/
+
+# OS-specific files (macOS and Windows)
+.DS_Store
+Thumbs.db
+
+# Optional:
+# If you use "coverage" directory for tests
+coverage/
