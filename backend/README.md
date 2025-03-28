@@ -32,7 +32,7 @@ This backend service provides API endpoints to:
    ```
    Then modify the values in the .env file according to your environment:
    ```
-   PORT=5001
+   PORT=your_port_here
    API_TOKEN=your_api_token_here
    CONFIG_COLLECTION=configurations
    CONFIG_DOCUMENT=appConfig
