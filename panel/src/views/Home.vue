@@ -185,26 +185,29 @@ const addConfig = async () => {
   if (newConfig.value.parameter_key && newConfig.value.value) {
     try {
       const firebaseId = await auth.currentUser?.getIdToken(true);
-      const response = await axios.patch(API_BASE_URL,
-        {
-          [newConfig.value.parameter_key]: newConfig.value.value,
-        },
-        {
-          headers: {
-            'Authorization': `Bearer ${firebaseId}`,
-          },
-        }
-      );
-      //console.log('Add new parameter response:', response);
 
-      if (response.data.success == false) {
-        alert(`Error: ${response.data.message}`);
-        return;
-      }
-
-      // If key already exists, do not add it again
+      // Check if the key already exists in configData
       const existingIndex = configData.value.findIndex((item) => item.parameter_key === newConfig.value.parameter_key);
+
       if (existingIndex === -1) {
+        // Key doesn't exist, add it as a new entry
+        const response = await axios.patch(API_BASE_URL,
+          {
+            [newConfig.value.parameter_key]: newConfig.value.value,
+          },
+          {
+            headers: {
+              'Authorization': `Bearer ${firebaseId}`,
+            },
+          }
+        );
+
+        if (response.data.success == false) {
+          alert(`Error: ${response.data.message}`);
+          return;
+        }
+
+        // Add the new key-value pair to configData
         configData.value.push({
           parameter_key: newConfig.value.parameter_key,
           value: newConfig.value.value,
@@ -212,16 +215,17 @@ const addConfig = async () => {
         });
         alert('New parameter added successfully');
       } else {
-        alert('Key already exists. Please edit the existing key.');
+        // Key exists, tell user to edit it instead
+        alert(`Key "${newConfig.value.parameter_key}" already exists. Please edit it instead.`);
+        return; 
       }
 
-      newConfig.value = { parameter_key: '', value: '' }; // Reset form
+      // Reset the form
+      newConfig.value = { parameter_key: '', value: '' };
     } catch (error) {
-      //console.error('Error adding new config:', error);
       alert('An error occurred while adding the new config');
     }
-  }
-  else {
+  } else {
     alert('Please enter a value');
   }
 };
@@ -272,6 +276,12 @@ const saveParameter = async (parameter: any) => {
 
 const editConfig = async (parameter: any) => {
   if (parameter.parameter_key && parameter.value) {
+    // Check if the value is actually different from the original value
+    if (parameter.value === parameter.originalValue) {
+      alert('No changes detected.');
+      return;
+    }
+
     try {
       const firebaseId = await auth.currentUser?.getIdToken(true);
       const response = await axios.patch(API_BASE_URL,
@@ -284,25 +294,25 @@ const editConfig = async (parameter: any) => {
           },
         }
       );
-      //console.log('Edit config response:', response);
 
+      // If backend returns a failure
       if (response.data.success == false) {
         alert(`Error: ${response.data.message}`);
         return;
       }
 
+      // Update the existing value in frontend data
       const existingIndex = configData.value.findIndex((item) => item.parameter_key === parameter.parameter_key);
       if (existingIndex !== -1) {
         configData.value[existingIndex].value = parameter.value;
         configData.value[existingIndex].isEditing = false;
       }
+
       alert('Parameter value changed successfully');
     } catch (error) {
-      //console.error('Error changing parameter value:', error);
       alert('An error occurred while changing the parameter value');
     }
-  }
-  else {
+  } else {
     alert('Please enter a value');
   }
 };

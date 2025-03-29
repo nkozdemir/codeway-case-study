@@ -2,6 +2,10 @@
 
 A web-based admin panel for managing configuration parameters, built with Vue 3, TypeScript, and Firebase authentication.
 
+- Panel deployed on Vercel. Access using the URL: https://codeway-case-study-blush.vercel.app/
+- Email Address: test@test.com
+- Password: test123
+
 ## Features
 
 - **Secure Authentication**: Firebase-based authentication system

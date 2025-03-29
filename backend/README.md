@@ -2,6 +2,10 @@
 
 A Node.js backend service with Express and Firebase integration for managing application configurations.
 
+- API Deployed on Google Cloud, base URL:
+https://codeway-case-study-293938705703.us-central1.run.app
+- Check API Endpoints section for available endpoints.
+
 ## Overview
 
 This backend service provides API endpoints to:
